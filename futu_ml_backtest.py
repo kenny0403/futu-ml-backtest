@@ -89,17 +89,41 @@ POSITION_SIZE = 0.5             # 50% 倉位
 
 # Stocks: (futu_code, display_name, type)
 STOCKS = [
+    # ===== 美股 AI =====
     ('US.GOOGL', 'GOOGL', '美股'),
     ('US.NVDA',  'NVDA',  '美股'),
     ('US.MSFT',  'MSFT',  '美股'),
-    ('US.MU',    'MU',    '美股'),
     ('US.META',  'META',  '美股'),
-    ('HK.00388', '0388港交所', '港股'),
+    ('US.AMD',   'AMD',   '美股'),
+    ('US.AVGO',  'AVGO',  '美股'),
+    ('US.SMCI',  'SMCI',  '美股'),
+    # ===== 美股 Storage =====
+    ('US.MU',    'MU',    '美股'),
+    ('US.WDC',   'WDC',   '美股'),
+    ('US.STX',   'STX',   '美股'),
+    ('US.SNDK',  'SNDK',  '美股'),
+    # ===== 美股 Space =====
+    ('US.SPCX',  'SPCX',  '美股'),
+    ('US.RKLB',  'RKLB',  '美股'),
+    ('US.ASTS',  'ASTS',  '美股'),
+    # ===== 美股 Optical =====
+    ('US.LITE',  'LITE',  '美股'),
+    ('US.COHR',  'COHR',  '美股'),
+    ('US.CIEN',  'CIEN',  '美股'),
+    # ===== 港股 =====
+    ('HK.01888', '1888建滔',   '港股'),
     ('HK.00700', '0700騰訊',   '港股'),
-    ('HK.03690', '3690美團',   '港股'),
-    ('HK.09988', '9988阿里',   '港股'),
+    ('HK.00992', '0992聯想',   '港股'),
     ('HK.07709', '7709湛江',   '港股'),
+    ('HK.09903', '9903舜宇',   '港股'),
     ('HK.03317', '3317訊策',   '港股'),
+    ('HK.02513', '2513智譜AI', '港股'),
+    ('HK.02631', '2631利郎',   '港股'),
+    ('HK.00189', '0189東岳',   '港股'),
+    # ===== 額外參考 =====
+    ('US.CEG',   'CEG',   '美股'),
+    ('US.PLTR',  'PLTR',  '美股'),
+    ('US.VST',   'VST',   '美股'),
 ]
 
 # 42 technical features
@@ -149,11 +173,10 @@ BLUE = HexColor('#1a5276'); GREEN = HexColor('#27ae60'); RED = HexColor('#e74c3c
 LBLUE = HexColor('#d6eaf8'); LGREEN = HexColor('#d5f5e3'); LRED = HexColor('#fadbd8')
 ORANGE = HexColor('#e67e22')
 
-# Pre-filter thresholds
-PE_MAX = 40
-PB_MAX = 15
-ROE_MIN = 0.05
-HIGH_GROWTH_THRESHOLD = 0.15   # revenue growth > 15% 可以豁免 PE 限制
+# Pre-filter thresholds (soft scoring, not hard gates)
+# PE_MAX = 100 — no longer used as hard filter
+# PB_MAX = 40  — no longer used as hard filter
+HIGH_GROWTH_THRESHOLD = 0.02   # 只要 revenue growth > 2% 就視為有增長
 
 # ============================================================
 # FUTU CONNECTION (single context reused)
@@ -385,9 +408,10 @@ def fundamental_score(pe, pb, roe, profit_margin):
     return max(0.0, min(100.0, round(score, 1)))
 
 def fundamental_prefilter(code, fundu_rec):
-    """Pre-filter：回傳 (passed, reason, score, details)。"""
+    """基本面評分 (非硬門檻) — 只 block 真正有毒嘅公司, 其他一律 pass + score。"""
     details = {}
-    for f in ['pe_ttm', 'pb', 'roe', 'profit_margin', 'revenue_growth_yoy', 'market_cap', 'log_market_cap']:
+    for f in ['pe_ttm', 'pb', 'roe', 'profit_margin', 'revenue_growth_yoy',
+              'market_cap', 'log_market_cap', 'total_revenue', 'debt_to_equity']:
         details[f] = fundu_rec.get(f)
 
     pe = fundu_rec.get('pe_ttm')
@@ -395,28 +419,38 @@ def fundamental_prefilter(code, fundu_rec):
     roe = fundu_rec.get('roe')
     pm = fundu_rec.get('profit_margin')
     rev_growth = fundu_rec.get('revenue_growth_yoy')
+    mcap = fundu_rec.get('market_cap', 0)
     score = fundamental_score(pe, pb, roe, pm)
-
-    # 高增長股豁免 PE 限制
-    high_growth = (rev_growth is not None
-                   and not (isinstance(rev_growth, float) and math.isnan(rev_growth))
-                   and rev_growth > HIGH_GROWTH_THRESHOLD)
 
     def _bad(v):
         return v is None or (isinstance(v, float) and math.isnan(v))
 
-    # PE > 40 或負數 → 除非高增長
-    if not _bad(pe):
-        if (pe > PE_MAX or pe <= 0) and not high_growth:
-            return False, f"PE={pe:.1f} 過高/虧損 (非高增長)", score, details
-    # PB 過高
-    if not _bad(pb) and pb > PB_MAX:
-        return False, f"PB={pb:.1f} 過高", score, details
-    # ROE 太低 (有數據時)
-    if not _bad(roe) and roe < 0:
-        return False, f"ROE={roe:.2%} 負數", score, details
+    has_growth = (not _bad(rev_growth) and rev_growth > HIGH_GROWTH_THRESHOLD)
+    big_cap = (not _bad(mcap) and mcap > 10e10)  # >100億 USD / 780億 HKD
 
-    return True, "通過基本面篩選", score, details
+    # 只 block 真正有毒: 虧損 + 無增長 + 細市值
+    if not _bad(pe) and pe < 0 and not _bad(roe) and roe < -0.3:
+        if not has_growth and not big_cap:
+            return False, f"虧損(PE={pe:.1f}) + 負ROE({roe:.0%}) + 無增長", score, details
+    # ROE 極負 + 細cap
+    if not _bad(roe) and roe < -0.5 and not big_cap:
+        if not has_growth:
+            return False, f"ROE={roe:.0%} 極低", score, details
+
+    # 通過 — 基本因素做 scoring, 唔係 hard gate
+    reason_parts = []
+    if score >= 70:
+        reason_parts.append(f"基本面強 (Score={score})")
+    elif score >= 40:
+        reason_parts.append(f"基本面中性 (Score={score})")
+    else:
+        reason_parts.append(f"基本面弱 (Score={score})")
+    if big_cap:
+        reason_parts.append(f"大盤市值")
+    if has_growth:
+        reason_parts.append(f"營收增長={rev_growth:.1%}")
+    reason = " | ".join(reason_parts)
+    return True, reason, score, details
 
 # ============================================================
 # ML BACKTEST  (SVM rbf 為主 + RF 輔助)
@@ -623,7 +657,7 @@ def backtest_stock(code, name, stype, fundu_rec=None, use_filter=True):
         'avg_loss': round(avg_loss, 4),
         'trades': n_trades,
         'fold_accs': [round(float(a), 3) for a in fold_accs],
-        'features': feat_imp,
+        'features': dict(feat_imp) if isinstance(feat_imp, list) else (feat_imp or {}),
         'fundu_score': fundu_score,
         'fundu_details': {k: (None if (isinstance(v, float) and math.isnan(v)) else v)
                           for k, v in fundu_details.items()},
@@ -786,7 +820,7 @@ def generate_pdf(all_results, filtered_stocks, output_path):
     elements.append(Paragraph(f'數據源: Futu OpenD 日K (前復權 QFQ, {LOOKBACK_YEARS}年)', sN))
     elements.append(Paragraph(f'模型: SVM-rbf 為主 + RandomForest 特徵重要性 | {len(FEATURE_LIST)} 技術因子', sN))
     elements.append(Paragraph(f'驗證: {WALK_FORWARD_SPLITS}折 Walk-Forward (TimeSeriesSplit) | 起始資金 ${START_CAPITAL:,.0f} | {POSITION_SIZE:.0%} 倉位', sN))
-    elements.append(Paragraph(f'基本面: PE/PB/ROE/ProfitMargin pre-filter (PE>{PE_MAX} 或負數跳過, 除非高增長)', sN))
+    elements.append(Paragraph(f'基本面: PE/PB/ROE/ProfitMargin soft-scoring (Score 0-100, 只 block 巨虧+無增長)', sN))
     n_passed = sum(1 for r in all_results.values() if not r.get('filtered', False))
     elements.append(Paragraph(f'標的: {len(STOCKS)} 隻美港股 | 通過篩選: {n_passed} | 被篩走: {len(filtered_stocks)}', sN))
     elements.append(Spacer(1, 0.5 * cm))
@@ -898,7 +932,12 @@ def generate_pdf(all_results, filtered_stocks, output_path):
 
         # Feature importance
         if r.get('features'):
-            feat_str = ' | '.join(f"{f}:{v:.3f}" for f, v in r['features'][:8])
+            feats = r['features']
+            if isinstance(feats, dict):
+                feat_items = sorted(feats.items(), key=lambda x: abs(x[1]), reverse=True)[:8]
+            else:
+                feat_items = list(feats)[:8]
+            feat_str = ' | '.join(f"{f}:{v:.3f}" for f, v in feat_items)
             elements.append(Paragraph(f"🔑 特徵重要性 (RF): {feat_str}", sN))
 
         # Embed chart
@@ -1031,6 +1070,8 @@ def main():
                 'data_period': v.get('data_period'), 'total_days': v.get('total_days'),
                 'chart': v.get('chart_path'),
                 'results': v.get('results', []),
+                'fundamental_score': v.get('fundu_score'),
+                'fundamental_data': v.get('results', [{}])[0].get('fundu_details', {}),
             } for v in all_results.values()],
             'filtered': [{
                 'name': r['name'], 'ticker': r['ticker'],
