@@ -2,4 +2,4 @@ __pycache__/
 *.pyc
 .env
 *.log
-.DS_Store
+.DS_Store.git-credentials
