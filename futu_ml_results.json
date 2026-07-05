@@ -1,0 +1,923 @@
+{
+  "generated": "2026-07-05 11:50:45 HKT",
+  "config": {
+    "lookback_years": 5,
+    "walk_forward_splits": 10,
+    "predict_horizon": 1,
+    "start_capital": 100000.0,
+    "position_size": 0.5,
+    "model": "SVM-rbf",
+    "feature_count": 41,
+    "prefilter_enabled": true
+  },
+  "stocks": [
+    {
+      "name": "GOOGL",
+      "ticker": "US.GOOGL",
+      "type": "美股",
+      "data_period": "2021-08-10 ~ 2026-07-01",
+      "total_days": 1228,
+      "chart": "/home/kenny/.hermes/profiles/trading/scripts/../cache/backtest/charts/GOOGL_equity.png",
+      "results": [
+        {
+          "model": "SVM-rbf",
+          "params": {
+            "C": "10",
+            "gamma": "scale",
+            "kernel": "rbf",
+            "max_iter": "5000",
+            "probability": "True"
+          },
+          "acc": 0.5414,
+          "acc_std": 0.0398,
+          "baseline": 0.5532,
+          "improvement": -0.0117,
+          "total_return": 0.7084,
+          "max_dd": 0.1597,
+          "sharpe": 0.98,
+          "sortino": 1.45,
+          "calmar": 4.43,
+          "win_rate": 0.5414,
+          "profit_factor": 1.18,
+          "avg_win": 0.0149,
+          "avg_loss": -0.0149,
+          "trades": 929,
+          "fold_accs": [
+            0.523,
+            0.514,
+            0.495,
+            0.577,
+            0.586,
+            0.595,
+            0.541,
+            0.541,
+            0.577,
+            0.468
+          ],
+          "features": [
+            [
+              "vol_ratio_20",
+              0.044363442480877306
+            ],
+            [
+              "stoch_k",
+              0.03719591840161306
+            ],
+            [
+              "body_pct",
+              0.03454380922406225
+            ],
+            [
+              "vol_ma5",
+              0.03402751634464369
+            ],
+            [
+              "ret_20d",
+              0.03348596704920271
+            ],
+            [
+              "ret_1d",
+              0.0334071931420778
+            ],
+            [
+              "upper_shadow",
+              0.031719444841491945
+            ],
+            [
+              "range_pct",
+              0.031520946024855466
+            ],
+            [
+              "bb_position",
+              0.03145022828393506
+            ],
+            [
+              "lower_shadow",
+              0.030532576228907295
+            ]
+          ],
+          "fundu_score": 57.0,
+          "fundu_details": {
+            "pe_ttm": 27.453,
+            "pb": 9.108,
+            "roe": 38.884800000000006,
+            "profit_margin": null,
+            "revenue_growth_yoy": null,
+            "market_cap": 4360669560000.0,
+            "log_market_cap": 29.103646730306348
+          },
+          "filtered": false,
+          "valid": true
+        }
+      ]
+    },
+    {
+      "name": "NVDA",
+      "ticker": "US.NVDA",
+      "type": "美股",
+      "data_period": "2021-08-10 ~ 2026-07-01",
+      "total_days": 1228,
+      "chart": "/home/kenny/.hermes/profiles/trading/scripts/../cache/backtest/charts/NVDA_equity.png",
+      "results": [
+        {
+          "model": "SVM-rbf",
+          "params": {
+            "C": "0.1",
+            "gamma": "scale",
+            "kernel": "rbf",
+            "max_iter": "5000",
+            "probability": "True"
+          },
+          "acc": 0.5414,
+          "acc_std": 0.0462,
+          "baseline": 0.5414,
+          "improvement": 0.0,
+          "total_return": 2.0168,
+          "max_dd": 0.1935,
+          "sharpe": 1.72,
+          "sortino": 2.61,
+          "calmar": 10.42,
+          "win_rate": 0.5587,
+          "profit_factor": 1.34,
+          "avg_win": 0.0227,
+          "avg_loss": -0.0215,
+          "trades": 732,
+          "fold_accs": [
+            0.523,
+            0.468,
+            0.477,
+            0.523,
+            0.604,
+            0.586,
+            0.55,
+            0.568,
+            0.604,
+            0.514
+          ],
+          "features": [
+            [
+              "upper_shadow",
+              0.037796460915609946
+            ],
+            [
+              "volatility_20d",
+              0.03629787726253732
+            ],
+            [
+              "vol_ma5",
+              0.033195372424918615
+            ],
+            [
+              "lower_shadow",
+              0.03231607542467614
+            ],
+            [
+              "stoch_k",
+              0.03150262281027732
+            ],
+            [
+              "range_pct",
+              0.03130112191084061
+            ],
+            [
+              "vol_ratio_20",
+              0.030895687188917855
+            ],
+            [
+              "bb_position",
+              0.03077194925140919
+            ],
+            [
+              "body_pct",
+              0.030015901227013978
+            ],
+            [
+              "rsi_7",
+              0.029275233558915436
+            ]
+          ],
+          "fundu_score": null,
+          "fundu_details": {},
+          "filtered": false,
+          "valid": true
+        }
+      ]
+    },
+    {
+      "name": "MSFT",
+      "ticker": "US.MSFT",
+      "type": "美股",
+      "data_period": "2021-08-10 ~ 2026-07-01",
+      "total_days": 1228,
+      "chart": "/home/kenny/.hermes/profiles/trading/scripts/../cache/backtest/charts/MSFT_equity.png",
+      "results": [
+        {
+          "model": "SVM-rbf",
+          "params": {
+            "C": "0.1",
+            "gamma": "scale",
+            "kernel": "rbf",
+            "max_iter": "5000",
+            "probability": "True"
+          },
+          "acc": 0.5486,
+          "acc_std": 0.0416,
+          "baseline": 0.5396,
+          "improvement": 0.009,
+          "total_return": 0.3695,
+          "max_dd": 0.131,
+          "sharpe": 0.86,
+          "sortino": 1.25,
+          "calmar": 2.82,
+          "win_rate": 0.5481,
+          "profit_factor": 1.16,
+          "avg_win": 0.0123,
+          "avg_loss": -0.0129,
+          "trades": 728,
+          "fold_accs": [
+            0.486,
+            0.541,
+            0.514,
+            0.514,
+            0.523,
+            0.577,
+            0.64,
+            0.568,
+            0.577,
+            0.55
+          ],
+          "features": [
+            [
+              "upper_shadow",
+              0.040691414801609226
+            ],
+            [
+              "volatility_20d",
+              0.034328938218641476
+            ],
+            [
+              "ret_1d",
+              0.03214185207228945
+            ],
+            [
+              "vol_ratio_5",
+              0.0313749429105362
+            ],
+            [
+              "obv_ratio",
+              0.030554169486594288
+            ],
+            [
+              "ret_5d",
+              0.029591513135192957
+            ],
+            [
+              "range_pct",
+              0.028524828835602593
+            ],
+            [
+              "body_pct",
+              0.028338415819449042
+            ],
+            [
+              "rsi_7",
+              0.027594858613646557
+            ],
+            [
+              "ma10_ma50",
+              0.026923784880483595
+            ]
+          ],
+          "fundu_score": 67.0,
+          "fundu_details": {
+            "pe_ttm": 23.257,
+            "pb": 7.0,
+            "roe": 34.0142,
+            "profit_margin": null,
+            "revenue_growth_yoy": null,
+            "market_cap": 2900729467564.96,
+            "log_market_cap": 28.6959833618296
+          },
+          "filtered": false,
+          "valid": true
+        }
+      ]
+    },
+    {
+      "name": "MU",
+      "ticker": "US.MU",
+      "type": "美股",
+      "data_period": "2021-08-10 ~ 2026-07-01",
+      "total_days": 1228,
+      "chart": "/home/kenny/.hermes/profiles/trading/scripts/../cache/backtest/charts/MU_equity.png",
+      "results": [
+        {
+          "model": "SVM-rbf",
+          "params": {
+            "C": "10",
+            "gamma": "scale",
+            "kernel": "rbf",
+            "max_iter": "5000",
+            "probability": "True"
+          },
+          "acc": 0.5243,
+          "acc_std": 0.0375,
+          "baseline": 0.5405,
+          "improvement": -0.0162,
+          "total_return": 2.446,
+          "max_dd": 0.1625,
+          "sharpe": 1.86,
+          "sortino": 2.97,
+          "calmar": 15.05,
+          "win_rate": 0.5368,
+          "profit_factor": 1.39,
+          "avg_win": 0.0302,
+          "avg_loss": -0.0252,
+          "trades": 598,
+          "fold_accs": [
+            0.495,
+            0.495,
+            0.568,
+            0.514,
+            0.468,
+            0.505,
+            0.541,
+            0.514,
+            0.604,
+            0.541
+          ],
+          "features": [
+            [
+              "vol_ratio_5",
+              0.037686027464707166
+            ],
+            [
+              "lower_shadow",
+              0.0346188067655783
+            ],
+            [
+              "upper_shadow",
+              0.03422348662363999
+            ],
+            [
+              "range_pct",
+              0.03121028708855896
+            ],
+            [
+              "body_pct",
+              0.030627526444503086
+            ],
+            [
+              "obv",
+              0.028887459076122682
+            ],
+            [
+              "obv_ratio",
+              0.028718639896349363
+            ],
+            [
+              "vol_ma5",
+              0.028435969415917226
+            ],
+            [
+              "stoch_k",
+              0.02743295187921164
+            ],
+            [
+              "bb_lower",
+              0.027359783633179167
+            ]
+          ],
+          "fundu_score": 67.0,
+          "fundu_details": {
+            "pe_ttm": 22.051,
+            "pb": 10.938,
+            "roe": 66.6381,
+            "profit_margin": null,
+            "revenue_growth_yoy": null,
+            "market_cap": 1101790782389.56,
+            "log_market_cap": 27.727957955993926
+          },
+          "filtered": false,
+          "valid": true
+        }
+      ]
+    },
+    {
+      "name": "META",
+      "ticker": "US.META",
+      "type": "美股",
+      "data_period": "2021-08-10 ~ 2026-07-01",
+      "total_days": 1228,
+      "chart": "/home/kenny/.hermes/profiles/trading/scripts/../cache/backtest/charts/META_equity.png",
+      "results": [
+        {
+          "model": "SVM-rbf",
+          "params": {
+            "C": "1",
+            "gamma": "scale",
+            "kernel": "rbf",
+            "max_iter": "5000",
+            "probability": "True"
+          },
+          "acc": 0.5324,
+          "acc_std": 0.0387,
+          "baseline": 0.5288,
+          "improvement": 0.0036,
+          "total_return": 0.5334,
+          "max_dd": 0.1995,
+          "sharpe": 0.98,
+          "sortino": 1.22,
+          "calmar": 2.67,
+          "win_rate": 0.5486,
+          "profit_factor": 1.22,
+          "avg_win": 0.0171,
+          "avg_loss": -0.0172,
+          "trades": 576,
+          "fold_accs": [
+            0.559,
+            0.55,
+            0.477,
+            0.477,
+            0.559,
+            0.568,
+            0.568,
+            0.505,
+            0.486,
+            0.577
+          ],
+          "features": [
+            [
+              "lower_shadow",
+              0.04385706635035514
+            ],
+            [
+              "rsi_7",
+              0.04272961570648365
+            ],
+            [
+              "volatility_5d",
+              0.04077562453825224
+            ],
+            [
+              "upper_shadow",
+              0.03822045713397635
+            ],
+            [
+              "stoch_k",
+              0.03417632190170836
+            ],
+            [
+              "ret_1d",
+              0.033921737718644374
+            ],
+            [
+              "vol_ratio_20",
+              0.033193165526907674
+            ],
+            [
+              "macd_signal",
+              0.02764583926372242
+            ],
+            [
+              "obv",
+              0.02760052188670379
+            ],
+            [
+              "range_pct",
+              0.027438759107113336
+            ]
+          ],
+          "fundu_score": null,
+          "fundu_details": {},
+          "filtered": false,
+          "valid": true
+        }
+      ]
+    },
+    {
+      "name": "0388港交所",
+      "ticker": "HK.00388",
+      "type": "港股",
+      "data_period": "2021-08-11 ~ 2026-07-02",
+      "total_days": 1199,
+      "chart": "/home/kenny/.hermes/profiles/trading/scripts/../cache/backtest/charts/0388港交所_equity.png",
+      "results": [
+        {
+          "model": "SVM-rbf",
+          "params": {
+            "C": "0.1",
+            "gamma": "scale",
+            "kernel": "rbf",
+            "max_iter": "5000",
+            "probability": "True"
+          },
+          "acc": 0.5734,
+          "acc_std": 0.0411,
+          "baseline": 0.567,
+          "improvement": 0.0064,
+          "total_return": 0.3773,
+          "max_dd": 0.0379,
+          "sharpe": 4.25,
+          "sortino": 10.77,
+          "calmar": 9.94,
+          "win_rate": 0.6111,
+          "profit_factor": 2.11,
+          "avg_win": 0.0189,
+          "avg_loss": -0.0141,
+          "trades": 108,
+          "fold_accs": [
+            0.587,
+            0.606,
+            0.615,
+            0.569,
+            0.615,
+            0.596,
+            0.55,
+            0.477,
+            0.532,
+            0.587
+          ],
+          "features": [
+            [
+              "upper_shadow",
+              0.04352484620615055
+            ],
+            [
+              "vol_ratio_5",
+              0.035510300196090146
+            ],
+            [
+              "vol_ma5",
+              0.03451515491760519
+            ],
+            [
+              "vol_ratio_20",
+              0.034244061734556616
+            ],
+            [
+              "volatility_5d",
+              0.03252372123102259
+            ],
+            [
+              "body_pct",
+              0.029035468333164248
+            ],
+            [
+              "lower_shadow",
+              0.0283414163017577
+            ],
+            [
+              "close_ma10",
+              0.027951576694227587
+            ],
+            [
+              "range_pct",
+              0.0278810687050058
+            ],
+            [
+              "ret_5d",
+              0.026429837868755544
+            ]
+          ],
+          "fundu_score": 67.0,
+          "fundu_details": {
+            "pe_ttm": 25.201,
+            "pb": 8.62,
+            "roe": 9.158149,
+            "profit_margin": 0.76106971,
+            "revenue_growth_yoy": 0.70435866,
+            "market_cap": 475438835625.0,
+            "log_market_cap": 26.88750407895462
+          },
+          "filtered": false,
+          "valid": true
+        }
+      ]
+    },
+    {
+      "name": "0700騰訊",
+      "ticker": "HK.00700",
+      "type": "港股",
+      "data_period": "2021-08-11 ~ 2026-07-02",
+      "total_days": 1199,
+      "chart": "/home/kenny/.hermes/profiles/trading/scripts/../cache/backtest/charts/0700騰訊_equity.png",
+      "results": [
+        {
+          "model": "SVM-rbf",
+          "params": {
+            "C": "0.1",
+            "gamma": "scale",
+            "kernel": "rbf",
+            "max_iter": "5000",
+            "probability": "True"
+          },
+          "acc": 0.5422,
+          "acc_std": 0.039,
+          "baseline": 0.5431,
+          "improvement": -0.0009,
+          "total_return": 0.1906,
+          "max_dd": 0.0597,
+          "sharpe": 3.15,
+          "sortino": 4.41,
+          "calmar": 3.19,
+          "win_rate": 0.5765,
+          "profit_factor": 1.71,
+          "avg_win": 0.0176,
+          "avg_loss": -0.0144,
+          "trades": 85,
+          "fold_accs": [
+            0.56,
+            0.56,
+            0.578,
+            0.56,
+            0.523,
+            0.514,
+            0.55,
+            0.459,
+            0.514,
+            0.606
+          ],
+          "features": [
+            [
+              "ret_10d",
+              0.04127889973520957
+            ],
+            [
+              "range_pct",
+              0.03858705939601255
+            ],
+            [
+              "rsi_7",
+              0.03693236678533972
+            ],
+            [
+              "stoch_k",
+              0.034331063292404325
+            ],
+            [
+              "vol_ratio_5",
+              0.03064054375504429
+            ],
+            [
+              "close_ma10",
+              0.029909682465787298
+            ],
+            [
+              "close_ma5",
+              0.029654775497612217
+            ],
+            [
+              "volatility_5d",
+              0.029513656400565812
+            ],
+            [
+              "vol_ratio_20",
+              0.029401783905781548
+            ],
+            [
+              "bb_width",
+              0.02912909520230357
+            ]
+          ],
+          "fundu_score": null,
+          "fundu_details": {},
+          "filtered": false,
+          "valid": true
+        }
+      ]
+    },
+    {
+      "name": "9988阿里",
+      "ticker": "HK.09988",
+      "type": "港股",
+      "data_period": "2021-08-11 ~ 2026-07-02",
+      "total_days": 1199,
+      "chart": "/home/kenny/.hermes/profiles/trading/scripts/../cache/backtest/charts/9988阿里_equity.png",
+      "results": [
+        {
+          "model": "SVM-rbf",
+          "params": {
+            "C": "10",
+            "gamma": "scale",
+            "kernel": "rbf",
+            "max_iter": "5000",
+            "probability": "True"
+          },
+          "acc": 0.5514,
+          "acc_std": 0.0366,
+          "baseline": 0.5459,
+          "improvement": 0.0055,
+          "total_return": 0.2814,
+          "max_dd": 0.0526,
+          "sharpe": 3.87,
+          "sortino": 10.24,
+          "calmar": 5.35,
+          "win_rate": 0.614,
+          "profit_factor": 2.03,
+          "avg_win": 0.0291,
+          "avg_loss": -0.0239,
+          "trades": 57,
+          "fold_accs": [
+            0.569,
+            0.596,
+            0.56,
+            0.541,
+            0.56,
+            0.523,
+            0.505,
+            0.505,
+            0.532,
+            0.624
+          ],
+          "features": [
+            [
+              "vol_ma5",
+              0.03412219406447015
+            ],
+            [
+              "obv_ma5",
+              0.03319134320764563
+            ],
+            [
+              "close_ma5",
+              0.03150918421647063
+            ],
+            [
+              "obv",
+              0.031234863251029664
+            ],
+            [
+              "vol_ratio_5",
+              0.03030308620464207
+            ],
+            [
+              "range_pct",
+              0.03001034937733704
+            ],
+            [
+              "ma5",
+              0.028709271620889577
+            ],
+            [
+              "vol_ratio_20",
+              0.02840181871009846
+            ],
+            [
+              "atr_pct",
+              0.028119799291852
+            ],
+            [
+              "ret_1d",
+              0.027550691234473706
+            ]
+          ],
+          "fundu_score": 85.0,
+          "fundu_details": {
+            "pe_ttm": 15.068,
+            "pb": 1.504,
+            "roe": 10.220694,
+            "profit_margin": 0.09976555,
+            "revenue_growth_yoy": 0.16834753,
+            "market_cap": 1807313929652.6,
+            "log_market_cap": 28.22286284219625
+          },
+          "filtered": false,
+          "valid": true
+        }
+      ]
+    },
+    {
+      "name": "7709湛江",
+      "ticker": "HK.07709",
+      "type": "港股",
+      "data_period": "2025-12-29 ~ 2026-07-02",
+      "total_days": 123,
+      "chart": "/home/kenny/.hermes/profiles/trading/scripts/../cache/backtest/charts/7709湛江_equity.png",
+      "results": [
+        {
+          "model": "SVM-rbf",
+          "params": {
+            "C": "0.1",
+            "gamma": "scale",
+            "kernel": "rbf",
+            "max_iter": "5000",
+            "probability": "True"
+          },
+          "acc": 0.6,
+          "acc_std": 0.1233,
+          "baseline": 0.6182,
+          "improvement": -0.0182,
+          "total_return": 1.5315,
+          "max_dd": 0.3814,
+          "sharpe": 3.08,
+          "sortino": 5.59,
+          "calmar": 4.02,
+          "win_rate": 0.5979,
+          "profit_factor": 1.67,
+          "avg_win": 0.0944,
+          "avg_loss": -0.0913,
+          "trades": 97,
+          "fold_accs": [
+            0.455,
+            0.636,
+            0.455,
+            0.545,
+            0.455,
+            0.727,
+            0.818,
+            0.727,
+            0.545,
+            0.636
+          ],
+          "features": [
+            [
+              "upper_shadow",
+              0.06494720155449941
+            ],
+            [
+              "ret_1d",
+              0.0491466812553007
+            ],
+            [
+              "bb_width",
+              0.03727785317829883
+            ],
+            [
+              "obv_ratio",
+              0.03692460302104213
+            ],
+            [
+              "ret_10d",
+              0.033900565708557054
+            ],
+            [
+              "lower_shadow",
+              0.03016525611001998
+            ],
+            [
+              "ema12",
+              0.029026604838296173
+            ],
+            [
+              "ema_diff",
+              0.028754483420721625
+            ],
+            [
+              "macd_hist",
+              0.028523510195191677
+            ],
+            [
+              "ret_5d",
+              0.02821013136621394
+            ]
+          ],
+          "fundu_score": 50.0,
+          "fundu_details": {
+            "pe_ttm": null,
+            "pb": null,
+            "roe": null,
+            "profit_margin": null,
+            "revenue_growth_yoy": null,
+            "market_cap": null,
+            "log_market_cap": null
+          },
+          "filtered": false,
+          "valid": true
+        }
+      ]
+    }
+  ],
+  "filtered": [
+    {
+      "name": "3690美團",
+      "ticker": "HK.03690",
+      "filter_reason": "ROE=-458.84% 負數",
+      "fundu_score": 25.0,
+      "fundu_details": {
+        "pe_ttm": -9.7,
+        "pb": 2.603,
+        "roe": -4.58838,
+        "profit_margin": -0.07499275,
+        "revenue_growth_yoy": 0.53983908,
+        "market_cap": 442113242879.2,
+        "log_market_cap": 26.814831891818105
+      }
+    },
+    {
+      "name": "3317訊策",
+      "ticker": "HK.03317",
+      "filter_reason": "ROE=-484.85% 負數",
+      "fundu_score": 12.0,
+      "fundu_details": {
+        "pe_ttm": -363.157,
+        "pb": 14.497,
+        "roe": -4.848464,
+        "profit_margin": -0.10092499,
+        "revenue_growth_yoy": 3.41302343,
+        "market_cap": 37852053120.0,
+        "log_market_cap": 24.356951058951868
+      }
+    }
+  ]
+}
